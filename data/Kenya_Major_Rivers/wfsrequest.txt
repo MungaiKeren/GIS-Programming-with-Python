@@ -1,0 +1,1 @@
+http://geoserver:8080/geoserver/GeoportalData/wfs?request=GetFeature&version=1.0.0&typeName=GeoportalData:Kenya%20%E2%80%94%20Major_Rivers&outputFormat=shape-zip

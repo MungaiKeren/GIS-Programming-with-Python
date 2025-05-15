@@ -2,13 +2,27 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import os
 
-# Define the path to the shapefile
-shapefile_path = "../data/ne_110m_admin_0_countries.shp"
+# Define the path to the shapefiles
+countries_path = "../data/ne_110m_admin_0_countries.shp"
+rivers_path = "../data/Kenya_Major_Rivers/Kenya â Major_Rivers.shp"
+lakes_path = "../data/Kenya_Lake/Kenya â Lake.shp"
 
-# Read the shapefile
-gdf = gpd.read_file(shapefile_path)
+# Load the data
+africa = gpd.read_file(countries_path)[lambda df: df["CONTINENT"] == "Africa"]
+lakes = gpd.read_file(lakes_path).to_crs("EPSG:4326")
+rivers = gpd.read_file(rivers_path).to_crs("EPSG:4326")
+
 
 # Plot the data
-gdf.plot(figsize=(15, 10), edgecolor='black', cmap='tab20')
-plt.title("World Map")
+fig, ax = plt.subplots(figsize=(15, 10))
+africa.plot(ax=ax, edgecolor='black', cmap='tab20')
+rivers.plot(ax=ax, color='blue', linewidth=0.5, alpha=0.7, label="Rivers")
+lakes.plot(ax=ax, color='cyan', linewidth=0.5, alpha=0.7, label="Lakes")
+
+# Set the extent to focus on Kenya
+ax.set_xlim(33, 42)  # Longitude range
+ax.set_ylim(-5, 6)   # Latitude range
+
+plt.title("Kenya Major Rivers and Lakes")
+plt.legend()
 plt.show()
